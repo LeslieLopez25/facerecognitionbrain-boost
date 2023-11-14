@@ -44,7 +44,7 @@ class App extends Component {
   componentDidMount() {
     const token = sessionStorage.getItem("token");
     if (token) {
-      fetch("https://facerecognitionbrain-api-ral3.onrender.com/signin", {
+      fetch("http://localhost:3000/signin", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -54,16 +54,13 @@ class App extends Component {
         .then((resp) => resp.json())
         .then((data) => {
           if (data && data.id) {
-            fetch(
-              `https://facerecognitionbrain-api-ral3.onrender.com/profile/${data.id}`,
-              {
-                method: "get",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: token,
-                },
-              }
-            )
+            fetch(`http://localhost:3000/profile/${data.id}`, {
+              method: "get",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: token,
+              },
+            })
               .then((resp) => resp.json())
               .then((user) => {
                 if (user && user.email) {
@@ -123,7 +120,7 @@ class App extends Component {
     this.setState({
       imageUrl: this.state.input,
     });
-    fetch("https://facerecognitionbrain-api-ral3.onrender.com/imageurl", {
+    fetch("http://localhost:3000/imageurl", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -136,7 +133,7 @@ class App extends Component {
       .then((response) => response.json())
       .then((response) => {
         if (response) {
-          fetch("https://facerecognitionbrain-api-ral3.onrender.com/image", {
+          fetch("http://localhost:3000/image", {
             method: "put",
             headers: {
               "Content-Type": "application/json",
@@ -163,7 +160,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     if (route === "signout") {
-      fetch("https://facerecognitionbrain-api-ral3.onrender.com/signout", {
+      fetch("http://localhost:3000/signout", {
         method: "delete",
         headers: {
           "Content-Type": "application/json",

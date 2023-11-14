@@ -23,7 +23,7 @@ class Signin extends React.Component {
   };
 
   onSubmitSignIn = () => {
-    fetch("https://facerecognitionbrain-api-ral3.onrender.com/signin", {
+    fetch("http://localhost:3000/signin", {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -35,16 +35,13 @@ class Signin extends React.Component {
       .then((data) => {
         if (data.userId && data.success === true) {
           this.saveAuthTokenInSession(data.token);
-          fetch(
-            `https://facerecognitionbrain-api-ral3.onrender.com/profile/${data.id}`,
-            {
-              method: "get",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: data.token,
-              },
-            }
-          )
+          fetch(`http://localhost:3000/profile/${data.id}`, {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: data.token,
+            },
+          })
             .then((resp) => resp.json())
             .then((user) => {
               if (user && user.email) {

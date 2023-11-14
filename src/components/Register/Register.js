@@ -28,7 +28,7 @@ class Register extends React.Component {
   };
 
   onSubmitSignIn = () => {
-    fetch("https://facerecognitionbrain-api-ral3.onrender.com/register", {
+    fetch("http://localhost:3000/register", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -46,16 +46,13 @@ class Register extends React.Component {
         console.log(data);
         if (data.userId && data.success === "true") {
           this.saveAuthTokenInSession(data.token);
-          fetch(
-            `https://facerecognitionbrain-api-ral3.onrender.com/profile/${data.userId}`,
-            {
-              method: "get",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: data.token,
-              },
-            }
-          )
+          fetch(`http://localhost:3000/profile/${data.userId}`, {
+            method: "get",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: data.token,
+            },
+          })
             .then((response) => response.json())
             .then((user) => {
               if (user && user.email) {
